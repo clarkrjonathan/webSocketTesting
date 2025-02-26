@@ -13,11 +13,9 @@ import java.util.Scanner;
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
-		webMessageTest(1824, "10.49.205.203");
-		
+		PythonEndpoint pythonServer = new PythonEndpoint(8080);
 	}
 	
-
 	
 	public static void webMessageTest(int port, String ip) throws IOException {
 		

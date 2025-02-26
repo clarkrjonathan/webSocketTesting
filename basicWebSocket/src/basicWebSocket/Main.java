@@ -12,6 +12,11 @@ import java.util.Scanner;
 public class Main {
 	public static void main(String[] args) throws IOException {
 
+		webMessageTest();
+		
+	}
+	
+	public static void webMessageTest() throws IOException {
 		int port = 1824;
 		String ip = "10.49.205.203";
 		
@@ -27,7 +32,6 @@ public class Main {
 			runClient(ip, port);
 		}
 		scanner.close();
-		
 	}
 	
 	public static void runClient(String ip, int port) throws IOException {

@@ -13,16 +13,14 @@ import java.util.Scanner;
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
-
-		webMessageTest();
+		webMessageTest(1824, "10.49.205.203");
 		
 	}
 	
 
 	
-	public static void webMessageTest() throws IOException {
-		int port = 1824;
-		String ip = "10.49.179.107";
+	public static void webMessageTest(int port, String ip) throws IOException {
+		
 		
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Server(0) Client(1): ");

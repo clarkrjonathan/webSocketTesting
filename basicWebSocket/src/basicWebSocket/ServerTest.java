@@ -23,12 +23,11 @@ public class ServerTest {
 	public ServerTest(int port) throws IOException {
 		System.out.println("Starting server...");
 		server = new ServerSocket(port);
-		
+	
 		client = server.accept();
 		System.out.println("Client connected:" + client.getLocalAddress().getHostAddress());
 		//output stream to be sent to client
 		out = new PrintWriter(client.getOutputStream(), true);
-		
 		//input stream coming from client
 		in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 	}

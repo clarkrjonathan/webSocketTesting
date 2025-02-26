@@ -3,6 +3,7 @@ package basicWebSocket;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -21,7 +22,7 @@ public class Main {
 	
 	public static void webMessageTest() throws IOException {
 		int port = 1824;
-		String ip = "10.49.205.203";
+		String ip = "10.49.179.107";
 		
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Server(0) Client(1): ");
@@ -41,7 +42,7 @@ public class Main {
 		ClientTest client = new ClientTest(ip, 1824);
 		Scanner scanner = new Scanner(System.in);
 		String msg = scanner.nextLine();
-		while(checkExit(msg)) {
+		while(!checkExit(msg)) {
 			client.sendMessage(msg);
 			msg = scanner.nextLine();
 		}
@@ -59,11 +60,14 @@ public class Main {
 		Scanner scanner = new Scanner(str);
 		try {
 			if(scanner.nextInt() == -1) {
+				scanner.close();
 				return true;
 			} else {
+				scanner.close();
 				return false;
 			}
 		} catch (InputMismatchException e) {
+			scanner.close();
 			return false;
 		}
 		
@@ -75,12 +79,15 @@ public class Main {
 		BufferedReader in = server.getIn();
 		Scanner scanner = new Scanner(in);
 		
-		String msg = scanner.nextLine();
+		//Will loop until client closes in which case there will be a NoSuchElementException error
+		try {
+			String msg = scanner.nextLine();
+			while(true) {
+				System.out.println(msg);
+				msg = scanner.nextLine();
+			}
+		} catch(NoSuchElementException e) {};
 		
-		while(checkExit(msg)) {
-			System.out.println(msg);
-			msg = scanner.nextLine();
-		}
 		System.out.println("Closing");
 		scanner.close();
 		server.closeServer();

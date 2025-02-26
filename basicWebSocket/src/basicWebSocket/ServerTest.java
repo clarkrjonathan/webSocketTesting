@@ -23,9 +23,9 @@ public class ServerTest {
 	public ServerTest(int port) throws IOException {
 		System.out.println("Starting server...");
 		server = new ServerSocket(port);
-		System.out.println("Client connected:" + client.getLocalAddress().getHostAddress());
-		client = server.accept();
 		
+		client = server.accept();
+		System.out.println("Client connected:" + client.getLocalAddress().getHostAddress());
 		//output stream to be sent to client
 		out = new PrintWriter(client.getOutputStream(), true);
 		
@@ -44,6 +44,14 @@ public class ServerTest {
 		//printing as a test for now
 		out.print(text);
 		scanner.close();
+	}
+	
+	/**
+	 * prints next line of input stream to console
+	 * @throws IOException 
+	 */
+	public String readMessage() throws IOException {
+		return in.readLine();
 	}
 	
 	public void sendMessage(String msg) {

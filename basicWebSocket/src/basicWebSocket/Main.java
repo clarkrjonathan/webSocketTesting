@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Establishes one way communication from client to server forwarding console input from client to the server console
+ * @author Jonathan Clark
+ *
+ */
 public class Main {
 	public static void main(String[] args) throws IOException {
 

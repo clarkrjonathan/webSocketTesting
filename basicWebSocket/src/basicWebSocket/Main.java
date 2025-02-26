@@ -31,6 +31,7 @@ public class Main {
 		String msg = scanner.nextLine();
 		while(msg != "-1") {
 			client.sendMessage(msg);
+			msg = scanner.nextLine();
 		}
 		
 		scanner.close();

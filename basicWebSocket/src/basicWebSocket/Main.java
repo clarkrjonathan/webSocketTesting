@@ -1,5 +1,6 @@
 package basicWebSocket;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -7,6 +8,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		int port = 1824;
+		String ip = "10.49.205.203";
 		
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Server(0) Client(1): ");
@@ -16,14 +18,15 @@ public class Main {
 		if(choice == 0) {
 			runServer(port);
 		} else {
-			runClient(port);
+			
+			runClient(ip, port);
 		}
 		scanner.close();
 		
 	}
 	
-	public static void runClient(int port) throws IOException {
-		ClientTest client = new ClientTest("10.49.205.203", 1824);
+	public static void runClient(String ip, int port) throws IOException {
+		ClientTest client = new ClientTest(ip, 1824);
 		Scanner scanner = new Scanner(System.in);
 		String msg = scanner.nextLine();
 		while(msg != "-1") {
@@ -36,12 +39,18 @@ public class Main {
 	
 	public static void runServer(int port) throws IOException {
 		ServerTest server = new ServerTest(port);
-		String msg = server.readMessage();
+		BufferedReader in = server.getIn();
+		Scanner scanner = new Scanner(in);
+		
+		
+		String msg = scanner.nextLine();
 		while(msg != "-1") {
 			System.out.println(msg);
-			msg = server.readMessage();
+			msg = scanner.nextLine();
 		}
 		
+		scanner.close();
+		server.closeServer();
 	}
 
 }

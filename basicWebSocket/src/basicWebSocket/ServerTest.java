@@ -54,6 +54,10 @@ public class ServerTest {
 		return in.readLine();
 	}
 	
+	public BufferedReader getIn() {
+		return in;
+	}
+	
 	public void sendMessage(String msg) {
 		out.println(msg);
 	}

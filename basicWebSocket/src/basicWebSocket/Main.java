@@ -2,6 +2,7 @@ package basicWebSocket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -15,6 +16,8 @@ public class Main {
 		webMessageTest();
 		
 	}
+	
+
 	
 	public static void webMessageTest() throws IOException {
 		int port = 1824;
@@ -38,13 +41,33 @@ public class Main {
 		ClientTest client = new ClientTest(ip, 1824);
 		Scanner scanner = new Scanner(System.in);
 		String msg = scanner.nextLine();
-		while(msg != "-1") {
+		while(checkExit(msg)) {
 			client.sendMessage(msg);
 			msg = scanner.nextLine();
 		}
-		
+		System.out.println("Closing");
 		scanner.close();
 		client.closeClient();
+	}
+	
+	/**
+	 * returns true if should exit
+	 * @param str
+	 * @return if exit condition
+	 */
+	public static boolean checkExit(String str) {
+		Scanner scanner = new Scanner(str);
+		try {
+			if(scanner.nextInt() == -1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (InputMismatchException e) {
+			return false;
+		}
+		
+	
 	}
 	
 	public static void runServer(int port) throws IOException {
@@ -52,13 +75,13 @@ public class Main {
 		BufferedReader in = server.getIn();
 		Scanner scanner = new Scanner(in);
 		
-		
 		String msg = scanner.nextLine();
-		while(msg != "-1") {
+		
+		while(checkExit(msg)) {
 			System.out.println(msg);
 			msg = scanner.nextLine();
 		}
-		
+		System.out.println("Closing");
 		scanner.close();
 		server.closeServer();
 	}

@@ -13,10 +13,15 @@ import java.util.Scanner;
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
-		PythonEndpoint pythonServer = new PythonEndpoint(8080);
+		webMessageTest(1824, "");
 	}
 	
-	
+	/**
+	 * Simple message where the server receives messages from the client
+	 * @param port
+	 * @param ip - ip of server
+	 * @throws IOException
+	 */
 	public static void webMessageTest(int port, String ip) throws IOException {
 		
 		

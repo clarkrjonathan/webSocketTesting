@@ -2,6 +2,7 @@ package basicWebSocket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -12,8 +13,54 @@ import java.util.Scanner;
  *
  */
 public class Main {
-	public static void main(String[] args) throws IOException {
-		webMessageTest(1824, "");
+	public static void main(String[] args) throws IOException, InterruptedException {
+		runServer(1824);
+	}
+	
+	public static void charEcho() throws IOException, InterruptedException {
+		ClientTest test = new ClientTest("192.168.1.1", 288);
+		Scanner usrInput = new Scanner(System.in);
+		Scanner cybotScan = new Scanner(test.getIn());
+		PrintWriter out = test.getOut();
+		
+		out.println("B");
+		
+		
+		String msg = "Hello World";
+		char c = ')';
+		int j = 0;
+		while(j < msg.length()) {
+			
+			c = msg.charAt(j);
+			out.println(msg.charAt(j));
+			Thread.sleep(10);
+			
+			j++;
+		}
+		
+		usrInput.close();
+		cybotScan.close();
+//		while(cybotInput.hasNext()) {
+//			System.out.println(cybotInput.next());
+//		}
+		
+	}
+	
+	public static void consoleOut() throws IOException {
+		ClientTest test = new ClientTest("192.168.1.1", 288);
+		//test.sendHandshake();
+		BufferedReader in = test.getIn();
+		Scanner scanner = new Scanner(in);
+
+		String inpt = scanner.nextLine();
+		while(inpt != "fjdksaljeoin") {
+			
+			while(!scanner.hasNextLine()) {};
+			inpt = scanner.nextLine();
+			System.out.println(inpt);
+		}
+		
+		scanner.close();
 	}
 	
 	/**

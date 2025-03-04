@@ -13,41 +13,50 @@ import java.util.Scanner;
  *
  */
 public class Main {
+	
+	public static final String IP = "10.49.179.103";
+	public static final int PORT = 1824;
+	
+	
 	public static void main(String[] args) throws IOException, InterruptedException {
-		runServer(1824);
+		
+		runServer(PORT);
+		
 	}
 	
-	public static void charEcho() throws IOException, InterruptedException {
-		ClientTest test = new ClientTest("192.168.1.1", 288);
-		Scanner usrInput = new Scanner(System.in);
-		Scanner cybotScan = new Scanner(test.getIn());
-		PrintWriter out = test.getOut();
-		
-		out.println("B");
-		
-		
-		String msg = "Hello World";
-		char c = ')';
-		int j = 0;
-		while(j < msg.length()) {
-			
-			c = msg.charAt(j);
-			out.println(msg.charAt(j));
-			Thread.sleep(10);
-			
-			j++;
-		}
-		
-		usrInput.close();
-		cybotScan.close();
-//		while(cybotInput.hasNext()) {
-//			System.out.println(cybotInput.next());
-//		}
+	/**
+	 * Sends a byte of data to the server and waits an echo back
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public static void charEchoTestServer(int port) throws IOException, InterruptedException {
+		ServerTest test = new ServerTest(1824);
+		while(test.echoChar() != 33) {};
 		
 	}
+	
+	/**
+	 * sends hello world and waits for echo back for each char
+	 * @param ip
+	 * @param port
+	 * @throws IOException 
+	 */
+	public static void charEchoTestClient(String ip, int port) throws IOException {
+		ClientTest client = new ClientTest(ip, port);
+		int next = System.in.read();
+		
+		while (next != 48) {
+			//busywait next char
+			while (next == -1) {next = System.in.read();}
+			client.sendByte((byte) next);
+			next = System.in.read();
+		}
+	}
+	
 	
 	public static void consoleOut() throws IOException {
 		ClientTest test = new ClientTest("192.168.1.1", 288);
+		
 		//test.sendHandshake();
 		BufferedReader in = test.getIn();
 		Scanner scanner = new Scanner(in);
@@ -60,6 +69,23 @@ public class Main {
 			System.out.println(inpt);
 		}
 		
+		scanner.close();
+	}
+	
+	public static void charEchoTest(int port, String ip) throws IOException, InterruptedException {
+		
+		
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Server(0) Client(1): ");
+		
+		
+		int choice = scanner.nextInt();
+		if(choice == 0) {
+			charEchoTestServer(port);
+		} else {
+			
+			charEchoTestClient(ip, port);
+		}
 		scanner.close();
 	}
 	

@@ -13,7 +13,11 @@ public class ServerTest {
 	private ServerSocket server;
 	private Socket client;
 	private BufferedReader in;
-	private PrintWriter out;
+	private PrintWriter outWriter;
+	
+	private OutputStream out;
+	
+	private InputStream inputStream;
 	
 	/**
 	 * Constructer initializes a test websocket server on given port
@@ -27,10 +31,27 @@ public class ServerTest {
 		client = server.accept();
 		System.out.println("Client connected:" + client.getLocalAddress().getHostAddress());
 		//output stream to be sent to client
-		out = new PrintWriter(client.getOutputStream(), true);
+		outWriter = new PrintWriter(client.getOutputStream(), true);
+		out = client.getOutputStream();
 		//input stream coming from client
 		in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+		inputStream = client.getInputStream();
 	}
+	
+	/**
+	 * Echos a char if there is one to be read
+	 * @return true if there was a character echo'd
+	 * @throws IOException 
+	 */
+	public byte echoChar() throws IOException {
+		int data = inputStream.read();
+		
+		if (data != -1) {
+			out.write(data);
+		}
+		return (byte) data;
+	}
+	
 	
 	public void sendFile(String filePath) throws FileNotFoundException{
 		File file = new File(filePath);
@@ -41,7 +62,7 @@ public class ServerTest {
 		}
 		
 		//printing as a test for now
-		out.print(text);
+		outWriter.print(text);
 		scanner.close();
 	}
 	
@@ -58,14 +79,14 @@ public class ServerTest {
 	}
 	
 	public void sendMessage(String msg) {
-		out.println(msg);
+		outWriter.println(msg);
 	}
 	
 	public void closeServer() throws IOException {
 		server.close();
 		client.close();
 		in.close();
-		out.close();
+		outWriter.close();
 	}
 
 }

@@ -48,6 +48,7 @@ public class ServerTest {
 		
 		if (data != -1) {
 			out.write(data);
+			System.out.println((char) data);
 		}
 		return (byte) data;
 	}
@@ -74,14 +75,26 @@ public class ServerTest {
 		return in.readLine();
 	}
 	
+	/**
+	 * Gets a BufferedReader of the input stream
+	 * @return Input stream as a BufferedReader
+	 */
 	public BufferedReader getIn() {
 		return in;
 	}
 	
+	/**
+	 * Sends a message to the client
+	 * @param msg - Message to be sent
+	 */
 	public void sendMessage(String msg) {
 		outWriter.println(msg);
 	}
 	
+	/**
+	 * Takes the necessary actions to close out the websocket
+	 * @throws IOException
+	 */
 	public void closeServer() throws IOException {
 		server.close();
 		client.close();

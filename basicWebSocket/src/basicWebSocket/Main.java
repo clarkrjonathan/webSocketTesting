@@ -8,19 +8,28 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
- * Establishes one way communication from client to server forwarding console input from client to the server console
+ * A collection of test methods for me to deepen my understanding of websockets
+ * and of communication protocols
+ * Both server and client implementations
  * @author Jonathan Clark
  *
  */
 public class Main {
 	
+	/**
+	 * IP of server
+	 */
 	public static final String IP = "10.49.179.103";
+	
+	/**
+	 * Server port
+	 */
 	public static final int PORT = 1824;
 	
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
 		
-		runServer(PORT);
+		charEchoTestServer(PORT);
 		
 	}
 	
@@ -53,7 +62,10 @@ public class Main {
 		}
 	}
 	
-	
+	/**
+	 * Test method that reads console data from our lab robot in CPRE 288
+	 * @throws IOException
+	 */
 	public static void consoleOut() throws IOException {
 		ClientTest test = new ClientTest("192.168.1.1", 288);
 		
@@ -72,6 +84,13 @@ public class Main {
 		scanner.close();
 	}
 	
+	/**
+	 * Runs a test echoing characters between server and client
+	 * @param port
+	 * @param ip - ip of server
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public static void charEchoTest(int port, String ip) throws IOException, InterruptedException {
 		
 		
@@ -112,6 +131,12 @@ public class Main {
 		scanner.close();
 	}
 	
+	/**
+	 * Runs client side of the webMessageTest() method
+	 * @param ip - ip of server
+	 * @param port
+	 * @throws IOException
+	 */
 	public static void runClient(String ip, int port) throws IOException {
 		ClientTest client = new ClientTest(ip, 1824);
 		Scanner scanner = new Scanner(System.in);
@@ -126,9 +151,9 @@ public class Main {
 	}
 	
 	/**
-	 * returns true if should exit
-	 * @param str
-	 * @return if exit condition
+	 * Exit condition for the webMessageTest()
+	 * @param str - Data from client
+	 * @return if exit condition is true
 	 */
 	public static boolean checkExit(String str) {
 		Scanner scanner = new Scanner(str);
@@ -148,6 +173,11 @@ public class Main {
 	
 	}
 	
+	/**
+	 * Runs the server side of webMessageTest()
+	 * @param port
+	 * @throws IOException
+	 */
 	public static void runServer(int port) throws IOException {
 		ServerTest server = new ServerTest(port);
 		BufferedReader in = server.getIn();
